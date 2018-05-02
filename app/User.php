@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use Auth;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -48,6 +48,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['userid'=>$this->id,'userfname'=>$this->fname,'userlname'=>$this->lname,'isverified'=>$this->isverified,'useremail'=>$this->email];
     }
 }

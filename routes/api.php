@@ -24,4 +24,5 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::post('register','AuthController@Register');
+    Route::get('/send','EmailController@sendVerificationCode');
 });
