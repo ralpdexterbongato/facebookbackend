@@ -27,7 +27,6 @@ class CreateUsersTable extends Migration
             $table->smallInteger('admin_disabled')->nullable();
             $table->smallInteger('user_disabled')->nullable();
             $table->string('password',100);
-            $table->rememberToken();
             $table->timestamps();
         });
     }

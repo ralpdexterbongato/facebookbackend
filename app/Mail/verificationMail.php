@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class verificationMail extends Mailable
 {
+    public $userdata;
     use Queueable, SerializesModels;
 
     /**
@@ -16,9 +17,9 @@ class verificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userdata)
     {
-        //
+        $this->userdata = $userdata;
     }
 
     /**
@@ -28,6 +29,8 @@ class verificationMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.verification')->subject("Verify your account")->from("rdc2898@gmail.com");
+        return $this->view('emails.verification')->subject("Verify your account")->from("rdc2898@gmail.com")->with([
+                    'user' => $this->userdata,
+                  ]);;
     }
 }

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
 use Auth;
+use App\UserVerification;
+use JWTAuth;
+use App\Http\Controllers\EmailController;
 class AuthController extends Controller
 {
   /**
@@ -13,9 +16,10 @@ class AuthController extends Controller
    *
    * @return void
    */
-  public function __construct()
+  public function __construct(EmailController $emailcontroller)
   {
       $this->middleware('auth:api', ['except' => ['login','Register']]);
+      $this->emailcontroller = $emailcontroller;
   }
 
   /**
@@ -69,7 +73,7 @@ class AuthController extends Controller
    */
   public function refresh()
   {
-      return $this->respondWithToken(auth()->refresh());
+      return $this->respondWithToken(JWTAuth::fromUser(Auth::user()));
   }
 
   /**
@@ -85,7 +89,6 @@ class AuthController extends Controller
           'access_token' => $token,
           'token_type' => 'bearer',
           'expires_in' => auth()->factory()->getTTL() * 60,
-          'name'=> Auth::user()->fname.' '.Auth::user()->lname,
       ]);
   }
 
@@ -103,9 +106,18 @@ class AuthController extends Controller
     $userDB->lastSeen = Carbon::now();
     $userDB->save();
 
+    $this->GenerateVerificationCode($userDB->id);
+    $this->emailcontroller->sendVerificationCode($userDB->id);
     return $this->login($request);
   }
 
+  protected function GenerateVerificationCode($userid)
+  {
+    $verificationDB = new UserVerification;
+    $verificationDB->code = uniqid();
+    $verificationDB->user_id = $userid;
+    $verificationDB->save();
+  }
   protected function handleRegisterValidation($request)
   {
     $this->validate($request,[

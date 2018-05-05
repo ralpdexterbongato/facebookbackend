@@ -169,7 +169,7 @@ return [
     */
 
     'persistent_claims' => [
-        // 'foo',
+        // 'isverified',
         // 'bar',
     ],
 

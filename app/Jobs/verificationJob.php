@@ -11,15 +11,16 @@ use Mail;
 use App\Mail\verificationMail;
 class verificationJob implements ShouldQueue
 {
+    public $userdata;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userdata)
     {
-        //
+        $this->userdata = $userdata;
     }
 
     /**
@@ -29,7 +30,7 @@ class verificationJob implements ShouldQueue
      */
     public function handle()
     {
-      $to_email = 'rdc2898@gmail.com';
-      Mail::to($to_email)->send(new verificationMail);
+      $to_email = $this->userdata->email;
+      Mail::to($to_email)->send(new verificationMail($this->userdata));
     }
 }
