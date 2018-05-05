@@ -88,7 +88,7 @@ class AuthController extends Controller
       return response()->json([
           'access_token' => $token,
           'token_type' => 'bearer',
-          'expires_in' => auth()->factory()->getTTL() * 60,
+          'expires_in' => auth()->factory()->getTTL() * 1000,
       ]);
   }
 
@@ -103,7 +103,7 @@ class AuthController extends Controller
     $userDB->gender = $request->gender;
     $userDB->password = bcrypt($request->password);
     $userDB->birthday = date($request->birthday.' 00:00:00');
-    $userDB->lastSeen = Carbon::now();
+    $userDB->lastseen = Carbon::now();
     $userDB->save();
 
     $this->GenerateVerificationCode($userDB->id);

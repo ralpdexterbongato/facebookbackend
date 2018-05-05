@@ -23,7 +23,8 @@ class CreateUsersTable extends Migration
             $table->smallInteger('gender');
             $table->DateTime('birthday');
             $table->smallInteger('isverified')->nullable();
-            $table->DateTime('lastSeen');
+            $table->DateTime('lastseen');
+            $table->DateTime('lastposttime')->nullable();
             $table->smallInteger('admin_disabled')->nullable();
             $table->smallInteger('user_disabled')->nullable();
             $table->string('password',100);

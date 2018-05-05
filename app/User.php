@@ -50,4 +50,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return ['userid'=>$this->id,'userfname'=>$this->fname,'userlname'=>$this->lname,'isverified'=>$this->isverified,'useremail'=>$this->email];
     }
+    public function Posts()
+    {
+      return $this->hasMany('App\Post','user_id','id');
+    }
+    public function TaggedPosts()
+    {
+      return $this->morphedByMany('App\Post','taggable');
+    }
 }
