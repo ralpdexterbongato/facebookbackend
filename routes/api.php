@@ -22,6 +22,7 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
+    Route::get('/user/{id}', 'AuthController@getProfileData');
     Route::post('me', 'AuthController@me');
     Route::post('register','AuthController@Register');
     Route::get('/send/{id}','EmailController@sendVerificationCode');
@@ -29,4 +30,6 @@ Route::group([
     Route::resource('/post','PostController');
     Route::get('/profile/{id}','PostController@profilePost');
     Route::get('/profile-new/{id}','PostController@getMyNewlySubmitted');
+    Route::post('/addfriend','UserFriendsController@storeRequest');
+    Route::post('/acceptfriend','UserFriendsController@acceptRequest');
 });

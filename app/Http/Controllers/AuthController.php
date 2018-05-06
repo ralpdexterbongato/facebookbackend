@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use App\UserVerification;
 use JWTAuth;
+use App\UserFriend;
 use App\Http\Controllers\EmailController;
 class AuthController extends Controller
 {
@@ -88,7 +89,7 @@ class AuthController extends Controller
       return response()->json([
           'access_token' => $token,
           'token_type' => 'bearer',
-          'expires_in' => auth()->factory()->getTTL() * 1000,
+          'expires_in' => null,
       ]);
   }
 
@@ -128,5 +129,12 @@ class AuthController extends Controller
       'gender'=>'required|max:1',
       'password'=>'required|max:100',
     ]);
+  }
+  public function getProfileData($id)
+  {
+    $relationType =UserFriend::where('user_idf',Auth::user()->id)->where('user_ids', $id)->orWhere('user_ids',Auth::user()->id)->where('user_idf', $id)->get();
+    $userdata = User::where('id',$id)->get(['id','fname','lname','gender']);
+    $response = array('relation' => $relationType,'userdata'=>$userdata);
+    return response()->json($response);
   }
 }

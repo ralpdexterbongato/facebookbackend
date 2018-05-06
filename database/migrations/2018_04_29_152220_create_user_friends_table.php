@@ -17,6 +17,7 @@ class CreateUserFriendsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_idf');
             $table->unsignedInteger('user_ids');
+            $table->smallInteger('isFriends')->nullable();
             $table->foreign('user_idf')->references('id')->on('users');
             $table->foreign('user_ids')->references('id')->on('users');
             $table->timestamps();
