@@ -32,4 +32,8 @@ Route::group([
     Route::get('/profile-new/{id}','PostController@getMyNewlySubmitted');
     Route::post('/addfriend','UserFriendsController@storeRequest');
     Route::post('/acceptfriend','UserFriendsController@acceptRequest');
+    Route::delete('/remove-request/{otheruserid}','UserFriendsController@ignoreCancelRequest');
+    Route::delete('/unfriend/{otheruserid}','UserFriendsController@unfriendUser');
+    Route::get('/getnewposters','PostController@getTopFriendsWithNewPost');
+    Route::get('/newsfeedpostings/{friendid}','PostController@newsFeedPosts');
 });

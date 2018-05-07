@@ -137,4 +137,5 @@ class AuthController extends Controller
     $response = array('relation' => $relationType,'userdata'=>$userdata);
     return response()->json($response);
   }
+
 }

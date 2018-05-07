@@ -68,4 +68,16 @@ class UserFriendsController extends Controller
      ->where('user_ids', Auth::user()->id)->where('isFriends', '0')
      ->count();
     }
+    public function ignoreCancelRequest($otherUserId)
+    {
+      $myId = Auth::user()->id;
+      userFriend::where('user_idf',$myId)->where('user_ids',$otherUserId)->whereNull('isFriends')->orWhere('user_idf',$otherUserId)->where('user_ids',$myId)->whereNull('isFriends')->delete();
+      return ['success'=>'success'];
+    }
+    public function unfriendUser($otherid)
+    {
+      $myid = Auth::user()->id;
+      UserFriend::where('user_idf',$myid)->where('user_ids',$otherid)->orWhere('user_idf',$otherid)->where('user_ids',$myid)->whereNotNull('isFriends')->delete();
+      return ['success'=>'success'];
+    }
 }

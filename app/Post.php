@@ -23,4 +23,8 @@ class Post extends Model
       $timePosted = str_replace(' ago', '', $timePosted);
       return $timePosted;
     }
+    public function Poster()
+    {
+      return $this->belongsTo('App\User','user_id','id');
+    }
 }

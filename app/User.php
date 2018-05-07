@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Carbon\Carbon;
 use Auth;
 class User extends Authenticatable implements JWTSubject
 {
@@ -50,12 +51,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return ['userid'=>$this->id,'userfname'=>$this->fname,'userlname'=>$this->lname,'isverified'=>$this->isverified,'useremail'=>$this->email,'gender'=>$this->gender];
     }
-    public function Posts()
+    // public function Posts()
+    // {
+    //   return $this->hasMany('App\Post','user_id','id');
+    // }
+    public function TaggedPostsNewOnly()
     {
-      return $this->hasMany('App\Post','user_id','id');
+      $minAgo = Carbon::now()->subSeconds(500);
+      return $this->morphedByMany('App\Post','taggable')->where('updated_at','>',$minAgo)->orderBy('updated_at','DESC')->take(3);
     }
-    public function TaggedPosts()
+    public function friends()
     {
-      return $this->morphedByMany('App\Post','taggable');
+        return $this->belongsToMany('App\User','user_friends','user_idf','user_ids');
     }
 }

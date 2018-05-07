@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use Auth;
 use App\User;
+use Carbon\Carbon;
 use App\taggable;
 use App\Http\Controllers\Services\UserService;
 class PostController extends Controller
@@ -83,7 +84,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return Post::where('id',$id)->with('Poster')->get();
     }
 
     /**
@@ -122,10 +123,23 @@ class PostController extends Controller
 
     public function profilePost($id)
     {
-      return taggable::where('user_id',$id)->with('Post')->with('Poster')->orderBy('id','DESC')->paginate(10);
+      return taggable::where('user_id',$id)->orderBy('id','DESC')->paginate(10,['id']);
     }
     public function getMyNewlySubmitted($id)
     {
-      return taggable::where('creator_id',Auth::user()->id)->where('user_id',$id)->with('Post')->with('Poster')->orderBy('id','DESC')->take(1)->get();
+      return taggable::where('creator_id',Auth::user()->id)->where('user_id',$id)->orderBy('id','DESC')->take(1)->get(['id']);
     }
-}
+    public function getTopFriendsWithNewPost()
+    {
+      $myid = Auth::user()->id;
+      $me = User::find($myid);
+      return $me->friends()->orderBy('lastposttime','DESC')->paginate(10,['users.id','lastposttime']);
+    }
+    public function newsFeedPosts($friendID)
+    {
+      // $Friend = User::find($friendID);
+      // $Friend->TaggedPosts()->where('updated_at','<',$minAgo)->take(3)->get();
+      return User::where('id',$friendID)->with('TaggedPostsNewOnly')->get(['id','gender','fname','lname']);
+    }
+} 
+
