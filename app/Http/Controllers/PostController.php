@@ -54,7 +54,7 @@ class PostController extends Controller
       $postDB->save();
       $this->handleSavingTags($request,$postDB->id);
       $this->userservice->refreshLastPostTime($posterId);
-      return ['data'=>'success'];
+      return ['postid'=>$postDB->id];
     }
     protected function handleSavingTags($request,$contentID)
     {
@@ -72,7 +72,7 @@ class PostController extends Controller
     {
       $this->validate($request,[
         'description'=>'max:191',
-        'background'=>'max:1',
+        'background'=>'max:2',
         'privacy'=>'required|max:1'
       ]);
     }
@@ -137,8 +137,6 @@ class PostController extends Controller
     }
     public function newsFeedPosts($friendID)
     {
-      // $Friend = User::find($friendID);
-      // $Friend->TaggedPosts()->where('updated_at','<',$minAgo)->take(3)->get();
       return User::where('id',$friendID)->with('TaggedPostsNewOnly')->get(['id','gender','fname','lname']);
     }
 } 

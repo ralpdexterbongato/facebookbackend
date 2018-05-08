@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserFriend;
+use App\User;
 use Auth;
+use Carbon\Carbon;
+use App\Post;
 class UserFriendsController extends Controller
 {
     public function storeRequest(Request $request)
@@ -79,5 +82,15 @@ class UserFriendsController extends Controller
       $myid = Auth::user()->id;
       UserFriend::where('user_idf',$myid)->where('user_ids',$otherid)->orWhere('user_idf',$otherid)->where('user_ids',$myid)->whereNotNull('isFriends')->delete();
       return ['success'=>'success'];
+    }
+    public function PreviewUserFriends($id)
+    {
+      $userdata =  User::find($id);
+      return $userdata->friends()->orderBy('user_friends.id','DESC')->where('users.id','!=',$id)->take(9)->get(['users.id','fname','lname','gender']);
+    }
+    public function countfriendNewPost($userid)
+    {
+      $time = Carbon::now()->subSeconds(1000);
+      return Post::where('user_id',$userid)->where('created_at','>',$time)->count();
     }
 }

@@ -57,11 +57,11 @@ class User extends Authenticatable implements JWTSubject
     // }
     public function TaggedPostsNewOnly()
     {
-      $minAgo = Carbon::now()->subSeconds(500);
+      $minAgo = Carbon::now()->subHours(1);
       return $this->morphedByMany('App\Post','taggable')->where('updated_at','>',$minAgo)->orderBy('updated_at','DESC')->take(3);
     }
     public function friends()
     {
-        return $this->belongsToMany('App\User','user_friends','user_idf','user_ids');
+        return $this->belongsToMany('App\User','user_friends','user_idf','user_ids')->whereNotNull('isFriends');
     }
 }

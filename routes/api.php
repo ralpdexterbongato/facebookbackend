@@ -36,4 +36,6 @@ Route::group([
     Route::delete('/unfriend/{otheruserid}','UserFriendsController@unfriendUser');
     Route::get('/getnewposters','PostController@getTopFriendsWithNewPost');
     Route::get('/newsfeedpostings/{friendid}','PostController@newsFeedPosts');
+    Route::get('/profile-preview-friends/{userid}','UserFriendsController@PreviewUserFriends');
+    Route::get('/count-user-new-post/{userid}','UserFriendsController@countfriendNewPost');
 });

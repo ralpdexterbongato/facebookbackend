@@ -109,6 +109,7 @@ class AuthController extends Controller
 
     $this->GenerateVerificationCode($userDB->id);
     $this->emailcontroller->sendVerificationCode($userDB->id);
+    $this->setDefaultFriendSelf($userDB->id);
     return $this->login($request);
   }
 
@@ -130,11 +131,17 @@ class AuthController extends Controller
       'password'=>'required|max:100',
     ]);
   }
+  protected function setDefaultFriendSelf($myid)
+  {
+    $time= Carbon::now();
+    UserFriend::insert(['user_idf'=>$myid,'user_ids'=>$myid,'isFriends'=>'0','created_at'=>$time,'updated_at'=>$time]);
+  }
   public function getProfileData($id)
   {
-    $relationType =UserFriend::where('user_idf',Auth::user()->id)->where('user_ids', $id)->orWhere('user_ids',Auth::user()->id)->where('user_idf', $id)->get();
+    $relationType = UserFriend::where('user_idf',Auth::user()->id)->where('user_ids', $id)->orWhere('user_ids',Auth::user()->id)->where('user_idf', $id)->get();
     $userdata = User::where('id',$id)->get(['id','fname','lname','gender']);
-    $response = array('relation' => $relationType,'userdata'=>$userdata);
+    $friendstotal = UserFriend::where('user_idf',$id)->count();
+    $response = array('relation' => $relationType,'userdata'=>$userdata,'totalfriends'=>$friendstotal);
     return response()->json($response);
   }
 
