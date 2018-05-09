@@ -64,4 +64,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\User','user_friends','user_idf','user_ids')->whereNotNull('isFriends');
     }
+    public function friendRequestReceived()
+    {
+        return $this->belongsToMany('App\User','user_friends','user_ids','user_idf');
+    }
 }

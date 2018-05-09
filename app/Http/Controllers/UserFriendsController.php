@@ -93,4 +93,11 @@ class UserFriendsController extends Controller
       $time = Carbon::now()->subSeconds(1000);
       return Post::where('user_id',$userid)->where('created_at','>',$time)->count();
     }
+    public function getFriendRequest()
+    {
+       $myid = Auth::user()->id;
+       $me = User::find($myid);
+       $friendrequests = $me->friendRequestReceived()->whereNull('isFriends')->paginate(9,['users.id','gender','fname','lname']);
+       return $friendrequests;
+    }
 }

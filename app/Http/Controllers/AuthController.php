@@ -140,7 +140,7 @@ class AuthController extends Controller
   {
     $relationType = UserFriend::where('user_idf',Auth::user()->id)->where('user_ids', $id)->orWhere('user_ids',Auth::user()->id)->where('user_idf', $id)->get();
     $userdata = User::where('id',$id)->get(['id','fname','lname','gender']);
-    $friendstotal = UserFriend::where('user_idf',$id)->count();
+    $friendstotal = UserFriend::where('user_idf',$id)->whereNotNull('isFriends')->count();
     $response = array('relation' => $relationType,'userdata'=>$userdata,'totalfriends'=>$friendstotal);
     return response()->json($response);
   }

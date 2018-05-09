@@ -38,4 +38,5 @@ Route::group([
     Route::get('/newsfeedpostings/{friendid}','PostController@newsFeedPosts');
     Route::get('/profile-preview-friends/{userid}','UserFriendsController@PreviewUserFriends');
     Route::get('/count-user-new-post/{userid}','UserFriendsController@countfriendNewPost');
+    Route::get('/my-requests','UserFriendsController@getFriendRequest');
 });
