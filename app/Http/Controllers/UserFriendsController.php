@@ -10,6 +10,10 @@ use Carbon\Carbon;
 use App\Post;
 class UserFriendsController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth:api');
+    }
     public function storeRequest(Request $request)
     {
       $sentcount=$this->FriendRequestValidation($request);
@@ -61,6 +65,7 @@ class UserFriendsController extends Controller
       $friendDB->user_idf = Auth::user()->id;
       $friendDB->user_ids = $request->userid;
       $friendDB->isFriends = '0';
+      $friendDB->isSeen='0';
       $friendDB->save();
     }
     protected function acceptValidation(Request $request)
@@ -97,7 +102,25 @@ class UserFriendsController extends Controller
     {
        $myid = Auth::user()->id;
        $me = User::find($myid);
-       $friendrequests = $me->friendRequestReceived()->whereNull('isFriends')->paginate(9,['users.id','gender','fname','lname']);
+       $friendrequests = $me->friendRequestReceived()->orderBy('user_friends.id','DESC')->whereNull('isFriends')->paginate(9,['users.id','gender','fname','lname','isSeen']);
        return $friendrequests;
+    }
+    public function countFriendRequest()
+    {
+       $myid = Auth::user()->id;
+       $me = User::find($myid);
+       return $me->friendRequestReceived()->whereNull('isFriends')->whereNull('isSeen')->count();
+    }
+    public function updateAllToSeen()
+    {
+       $myid = Auth::user()->id;
+       UserFriend::whereNull('isFriends')->where('user_ids',$myid)->whereNull('isSeen')->update(['isSeen'=>'0']);
+    }
+    public function searchSuggestion(Request $request)
+    {
+      $myid = Auth::user()->id;
+      $me = User::find($myid);
+      $suggestions = $me->friends()->where('lname','LIKE','%'.$request->q.'%')->orWhere('fname','LIKE','%'.$request->q.'%')->where('user_friends.user_idf',Auth::user()->id)->take(5)->get(['users.id','fname','lname']);
+      return $suggestions;
     }
 }

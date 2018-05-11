@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
+| 
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
@@ -39,4 +39,7 @@ Route::group([
     Route::get('/profile-preview-friends/{userid}','UserFriendsController@PreviewUserFriends');
     Route::get('/count-user-new-post/{userid}','UserFriendsController@countfriendNewPost');
     Route::get('/my-requests','UserFriendsController@getFriendRequest');
+    Route::get('/count-requests','UserFriendsController@countFriendRequest');
+    Route::put('/update-req-as-seen','UserFriendsController@updateAllToSeen');
+    Route::get('/search-suggest','UserFriendsController@searchSuggestion');
 });

@@ -134,7 +134,7 @@ class AuthController extends Controller
   protected function setDefaultFriendSelf($myid)
   {
     $time= Carbon::now();
-    UserFriend::insert(['user_idf'=>$myid,'user_ids'=>$myid,'isFriends'=>'0','created_at'=>$time,'updated_at'=>$time]);
+    UserFriend::insert(['user_idf'=>$myid,'user_ids'=>$myid,'isFriends'=>'0','isSeen'=>null,'created_at'=>$time,'updated_at'=>$time]);
   }
   public function getProfileData($id)
   {
