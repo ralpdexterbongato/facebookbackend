@@ -123,7 +123,7 @@ class PostController extends Controller
 
     public function profilePost($id)
     {
-      return taggable::where('user_id',$id)->orderBy('id','DESC')->paginate(10,['id']);
+      return taggable::where('user_id',$id)->orderBy('id','DESC')->paginate(3,['id']);
     }
     public function getMyNewlySubmitted($id)
     {
@@ -133,7 +133,7 @@ class PostController extends Controller
     {
       $myid = Auth::user()->id;
       $me = User::find($myid);
-      return $me->friends()->orderBy('lastposttime','DESC')->paginate(10,['users.id','lastposttime']);
+      return $me->friends()->orderBy('lastposttime','DESC')->paginate(3,['users.id','lastposttime']);
     }
     public function newsFeedPosts($friendID)
     {

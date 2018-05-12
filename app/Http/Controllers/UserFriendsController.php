@@ -7,6 +7,7 @@ use App\UserFriend;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use App\Post;
 class UserFriendsController extends Controller
 {
@@ -120,7 +121,7 @@ class UserFriendsController extends Controller
     {
       $myid = Auth::user()->id;
       $me = User::find($myid);
-      $suggestions = $me->friends()->where('lname','LIKE','%'.$request->q.'%')->orWhere('fname','LIKE','%'.$request->q.'%')->where('user_friends.user_idf',Auth::user()->id)->take(5)->get(['users.id','fname','lname']);
+      $suggestions = $me->friends()->where(DB::raw("CONCAT(`fname`, ' ', `lname`)"),'LIKE','%'.$request->q.'%')->take(5)->get(['users.id','fname','lname']);
       return $suggestions;
     }
 }

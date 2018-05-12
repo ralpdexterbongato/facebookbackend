@@ -42,4 +42,8 @@ Route::group([
     Route::get('/count-requests','UserFriendsController@countFriendRequest');
     Route::put('/update-req-as-seen','UserFriendsController@updateAllToSeen');
     Route::get('/search-suggest','UserFriendsController@searchSuggestion');
+    Route::get('/find-people','AuthController@findMatchedPeople');
+
+    Route::resource('/post-comments','postCommentController');
+    Route::get('/commentsofpost/{postid}','postCommentController@getCommentsOfPost');
 });

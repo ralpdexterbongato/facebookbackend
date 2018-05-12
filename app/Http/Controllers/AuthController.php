@@ -10,6 +10,7 @@ use App\UserVerification;
 use JWTAuth;
 use App\UserFriend;
 use App\Http\Controllers\EmailController;
+use DB;
 class AuthController extends Controller
 {
   /**
@@ -144,5 +145,8 @@ class AuthController extends Controller
     $response = array('relation' => $relationType,'userdata'=>$userdata,'totalfriends'=>$friendstotal);
     return response()->json($response);
   }
-
+  public function findMatchedPeople(Request $request)
+  {
+    return User::where(DB::raw("CONCAT(`fname`, ' ', `lname`)"),'LIKE','%'.$request->q.'%')->paginate(5);
+  }
 }

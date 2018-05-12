@@ -16,7 +16,7 @@ class CreateCommentablesTable extends Migration
         Schema::create('commentables', function (Blueprint $table) {
             $table->unsignedInteger('comment_id');
             $table->unsignedInteger('commentable_id');
-            $table->unsignedInteger('commentable_type');
+            $table->string('commentable_type',100);
             $table->timestamps();
         });
     }
