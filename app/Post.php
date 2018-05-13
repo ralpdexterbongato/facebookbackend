@@ -20,4 +20,8 @@ class Post extends Model
     {
       return $this->morphToMany('App\Comment','commentable');
     }
+    public function reacts()
+    {
+      return $this->morphToMany('App\User','reactable');
+    }
 }

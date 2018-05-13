@@ -18,4 +18,8 @@ class Comment extends Model
     {
     	return Carbon::createFromFormat('Y-m-d H:i:s',$date)->diffForHumans(null,true,true);
     }
+    public function replies()
+    {
+        return $this->morphToMany('App\Comment','commentable');
+    }
 }

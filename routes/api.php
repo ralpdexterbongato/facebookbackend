@@ -46,4 +46,11 @@ Route::group([
 
     Route::resource('/post-comments','postCommentController');
     Route::get('/commentsofpost/{postid}','postCommentController@getCommentsOfPost');
+
+    Route::resource('/reply','ReplyController');
+    Route::get('/replies-of-comment/{mainCommentId}','ReplyController@getRepliesOfComments');
+
+    Route::resource('/post-reactions','postReactController');
+    Route::get('/post-count-reacts/{postid}','postReactController@countReacts');
+    Route::get('/my-react-to-post/{postid}','postReactController@getMyReactionToPost');
 });
