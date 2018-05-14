@@ -53,4 +53,7 @@ Route::group([
     Route::resource('/post-reactions','postReactController');
     Route::get('/post-count-reacts/{postid}','postReactController@countReacts');
     Route::get('/my-react-to-post/{postid}','postReactController@getMyReactionToPost');
+
+    Route::resource('/comment-reactions','commentReactionController');
+    Route::get('/my-comment-reaction/{commentid}','commentReactionController@getMyReaction');
 });
