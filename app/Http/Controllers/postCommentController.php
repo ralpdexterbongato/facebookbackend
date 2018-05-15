@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use Auth;
 use App\Post;
+use Carbon\Carbon;
 use App\commentable;
 class postCommentController extends Controller
 {
@@ -86,9 +87,10 @@ class postCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $commentid)
     {
-        //
+        Comment::where('id',$commentid)->update(['content'=>$request->content,'isUpdated'=>'0','updated_at'=>Carbon::now()]);
+        return ['success'=>'updated'];
     }
 
     /**
@@ -99,12 +101,21 @@ class postCommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+       commentable::where('comment_id',$id)->delete();
+       Comment::where('id',$id)->delete();
     }
 
     public function getCommentsOfPost($postid)
     {
+       $postdata=Post::find($postid);
+       $comments = $postdata->comments()->orderBy('comments.id','DESC')->paginate(4,['comments.id']);
+       $comments = (object)$comments;
+        return response()->json($comments);
+    }
+
+    public function countPostComments($postid)
+    {
         $postdata=Post::find($postid);
-        return $postdata->comments()->orderBy('comments.id','DESC')->paginate(4,['comments.id']);
+       $comments = $postdata->comments()->orderBy('comments.id','DESC')->count();
     }
 }

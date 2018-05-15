@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\commentable;
 use Auth;
+use Carbon\Carbon;
 class ReplyController extends Controller
 {
     /**
@@ -58,7 +59,7 @@ class ReplyController extends Controller
      */
     public function show($id)
     {
-        return Comment::where('id',$id)->with('CommentOwner')->get(['id','content','user_id','updated_at']);
+        return Comment::where('id',$id)->with('CommentOwner')->get(['id','content','user_id','updated_at','isUpdated']);
     }
 
     /**
@@ -79,9 +80,10 @@ class ReplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $commentid)
     {
-        //
+         Comment::where('id',$commentid)->update(['content'=>$request->content,'isUpdated'=>'0','updated_at'=>Carbon::now()]);
+         return ['success'=>'updated'];
     }
 
     /**
@@ -99,5 +101,11 @@ class ReplyController extends Controller
     {
         $commentDB = Comment::find($mainCommentId);
         return $commentDB->replies()->orderBy('comments.id','DESC')->paginate('4',['comments.id']);
+    }
+
+    public function getLatestReply($mainCommentID)
+    {
+        $commentDB = Comment::find($mainCommentID);
+        return $commentDB->replies()->with('CommentOwner')->orderBy('comments.id','DESC')->take(1)->get();
     }
 }
