@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'secret' => env('D87kofRwQwAHuMZjMnwor2zm3X7G2LcE'),
+    'secret' => env(D87kofRwQwAHuMZjMnwor2zm3X7G2LcE),
 
     /*
     |--------------------------------------------------------------------------
