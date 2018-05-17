@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => 'ralpdexterfacebookapp.herokuapp.com',
+        'secret' => 'key-8423fd2f371f7987d4ceeb3ab487e94d',
     ],
 
     'ses' => [
