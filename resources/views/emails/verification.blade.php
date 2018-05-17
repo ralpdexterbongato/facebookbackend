@@ -66,7 +66,7 @@ margin:0 auto;padding:5px;">
       color: #333;">
       <h1 style="margin-bottom: 20px;">Hey {{$user->fname}},</h1>
       <p style="line-height: 18px;">You recently registered for Facebook ( clone project). To complete your Facebook registration, please confirm your account</p>
-      <a href="//127.0.0.1:8000/api/verification?id={{$user->id}}&code={{$user->code}}" target="_blank"><button type="button" name="button" style="border-radius: 2px;
+      <a href="https://ralpdexterfacebookapp.herokuapp.com/api/verification?id={{$user->id}}&code={{$user->code}}" target="_blank"><button type="button" name="button" style="border-radius: 2px;
       cursor: pointer;
       border:1px solid rgba(0, 0, 0, 0.3);
       padding:10px 15px;
