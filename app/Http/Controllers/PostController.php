@@ -107,7 +107,8 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Post::where('id',$id)->update(['description'=>$request->description]);
+        return ['success'=>'success'];
     }
 
     /**
@@ -118,7 +119,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+       Post::where('id',$id)->delete();
+       return ['success'=>'removed successly'];
     }
 
     public function profilePost($id)
@@ -133,11 +135,12 @@ class PostController extends Controller
     {
       $myid = Auth::user()->id;
       $me = User::find($myid);
-      return $me->friends()->orderBy('lastposttime','DESC')->paginate(3,['users.id','lastposttime']);
+      return $me->friends()->orderBy('lastposttime','DESC')->paginate(1,['users.id','lastposttime']);
     }
     public function newsFeedPosts($friendID)
     {
-      return User::where('id',$friendID)->with('TaggedPostsNewOnly')->get(['id','gender','fname','lname']);
+      $friendData = User::find($friendID);
+      $friendIds = $friendData->TaggedPostsNewOnly()->paginate(1,['posts.id']);
+      return response()->json($friendIds);
     }
-} 
-
+}
