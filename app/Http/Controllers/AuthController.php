@@ -90,7 +90,7 @@ class AuthController extends Controller
       return response()->json([
           'access_token' => $token,
           'token_type' => 'bearer',
-          'expires_in' => null,
+          'expires_in' => 9000000,
       ]);
   }
 
