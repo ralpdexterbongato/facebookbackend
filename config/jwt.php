@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'secret' => 3et4cLEVvloRwj8EIDIBi2PwmqdU5NWj,
+    'secret' => [3et4cLEVvloRwj8EIDIBi2PwmqdU5NWj],
 
     /*
     |--------------------------------------------------------------------------
