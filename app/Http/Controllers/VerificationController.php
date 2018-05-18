@@ -13,10 +13,10 @@ class VerificationController extends Controller
       if(!empty($code[0]))
       {
         User::where('id',$request->id)->whereNull('isverified')->update(['isverified'=>0]);
-        return redirect('//127.0.0.1:4200/verified');
+        return redirect('https://ralpdexterbongato.github.io/facebook/verified');
       }else
       {
-        return redirect('//127.0.0.1:4200/home');
+        return redirect('https://ralpdexterbongato.github.io/facebook/home');
       }
     }
 }
