@@ -121,7 +121,7 @@ class UserFriendsController extends Controller
     {
       $myid = Auth::user()->id;
       $me = User::find($myid);
-      $suggestions = $me->friends()->where(DB::raw("CONCAT(fname::text,' ',lname::text)"),'%'.$request->q.'%')->take(5)->get(['users.id','fname','lname']);
+      $suggestions = $me->friends()->where(DB::raw("CONCAT(fname,lname)"),'%'.$request->q.'%')->take(5)->get(['users.id','fname','lname']);
       return $suggestions;
     }
 }
