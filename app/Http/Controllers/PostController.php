@@ -125,7 +125,7 @@ class PostController extends Controller
 
     public function profilePost($id)
     {
-      return taggable::where('user_id',$id)->orderBy('id','DESC')->paginate(3,['id']);
+      return taggable::where('user_id',$id)->orderBy('id','DESC')->paginate(1,['id']);
     }
     public function getMyNewlySubmitted($id)
     {
@@ -140,7 +140,7 @@ class PostController extends Controller
     public function newsFeedPosts($friendID)
     {
       $friendData = User::find($friendID);
-      $friendIds = $friendData->TaggedPostsNewOnly()->paginate(1,['posts.id']);
+      $friendIds = $friendData->TaggedPostsNewOnly()->paginate(3,['posts.id']);
       return response()->json($friendIds);
     }
 }
