@@ -46,7 +46,7 @@ class postCommentController extends Controller
         $commentDB->save();
 
         $commentableDB  = new commentable;
-        $commentableDB->comment_id = $commentDB->id;
+        $commentableDB->comment_id = '1';
         $commentableDB->commentable_id=$request->postid;
         $commentableDB->commentable_type='App\Post';
         $commentableDB->save();
