@@ -8,8 +8,9 @@ class Post extends Model
 {
     public function getCreatedAtAttribute($date)
     {
+
       $timePosted = Carbon::createFromFormat('Y-m-d H:i:s', $date)->diffForHumans(null,true,true);
-      // $timePosted = str_replace($sec, 'just now', $timePosted);
+      $timePosted = str_replace(['1s','2s','3s','4s','5s','6s','7s','8s','9s'], 'just now', $timePosted);
       return $timePosted;
     }
     public function Poster()
