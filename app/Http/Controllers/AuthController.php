@@ -147,6 +147,6 @@ class AuthController extends Controller
   }
   public function findMatchedPeople(Request $request)
   {
-    return User::where(DB::raw("CONCAT(users.fname,' ',users.lname)  AS fullname"),'%'.$request->q.'%')->paginate(5);
+    return User::where(DB::raw("CONCAT(users.fname,' ',users.lname)  AS 'fullname'"),'%'.$request->q.'%')->paginate(5);
   }
 }
