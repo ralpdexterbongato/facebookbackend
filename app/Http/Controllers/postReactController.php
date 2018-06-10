@@ -9,7 +9,7 @@ use Auth;
 use App\reactable;
 class postReactController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         $this->middleware('auth:api');
     }

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class commentReactionController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         $this->middleware('auth:api');
     }

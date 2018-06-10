@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\commentable;
 class postCommentController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         $this->middleware('auth:api');
     }

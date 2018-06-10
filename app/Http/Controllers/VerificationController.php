@@ -7,7 +7,7 @@ use App\User;
 use App\UserVerification;
 class VerificationController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         $this->middleware('auth:api');
     }
