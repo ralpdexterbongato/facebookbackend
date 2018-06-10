@@ -7,6 +7,10 @@ use App\User;
 use App\UserVerification;
 class VerificationController extends Controller
 {
+    public function __constructor()
+    {
+        $this->middleware('auth:api');
+    }
     public function verifyme(Request $request)
     {
       $code = UserVerification::where('code', $request->code)->where('id', $request->id)->take(1)->get();

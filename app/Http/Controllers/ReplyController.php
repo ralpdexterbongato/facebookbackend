@@ -9,6 +9,10 @@ use Auth;
 use Carbon\Carbon;
 class ReplyController extends Controller
 {
+    public function __constructor()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *

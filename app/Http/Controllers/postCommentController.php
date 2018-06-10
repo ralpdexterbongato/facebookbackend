@@ -10,6 +10,10 @@ use Carbon\Carbon;
 use App\commentable;
 class postCommentController extends Controller
 {
+    public function __constructor()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *

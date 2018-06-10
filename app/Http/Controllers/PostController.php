@@ -14,6 +14,7 @@ class PostController extends Controller
     public function __construct(UserService $userservice)
     {
       $this->userservice = $userservice;
+      $this->middleware('auth:api');
     }
     /**
      * Display a listing of the resource.

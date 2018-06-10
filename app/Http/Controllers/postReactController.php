@@ -9,6 +9,10 @@ use Auth;
 use App\reactable;
 class postReactController extends Controller
 {
+    public function __constructor()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
